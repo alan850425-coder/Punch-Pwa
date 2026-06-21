@@ -24,19 +24,17 @@
     .screen { display: none; min-height: 100vh; flex-direction: column; }
     .screen.active { display: flex; }
 
-    /* SETUP */
     #setupScreen { align-items: center; justify-content: center; padding: 2rem; background: var(--white); }
     .setup-logo { width: 72px; height: 72px; background: var(--blue); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; }
     .setup-logo svg { width: 36px; height: 36px; fill: white; }
     .setup-title { font-size: 22px; font-weight: 700; color: var(--blue); text-align: center; margin-bottom: 6px; }
     .setup-sub { font-size: 14px; color: var(--text2); text-align: center; margin-bottom: 2rem; }
     .setup-label { font-size: 13px; color: var(--text2); margin-bottom: 6px; }
-    .setup-input { width: 100%; height: 52px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 18px; padding: 0 16px; color: var(--text); background: var(--white); outline: none; transition: border-color 0.2s; }
+    .setup-input { width: 100%; height: 52px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 18px; padding: 0 16px; color: var(--text); background: var(--white); outline: none; }
     .setup-input:focus { border-color: var(--blue-light); }
     .setup-btn { width: 100%; height: 52px; background: var(--blue); color: white; border: none; border-radius: var(--radius-sm); font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 1rem; }
     .setup-btn:active { opacity: 0.8; }
 
-    /* MAIN */
     #mainScreen { background: #f0f4f8; }
     .topbar { background: var(--blue); color: white; padding: 16px 20px 14px; display: flex; align-items: center; justify-content: space-between; }
     .topbar-name { font-size: 16px; font-weight: 600; }
@@ -49,7 +47,7 @@
     .clock-date { font-size: 14px; color: var(--text2); margin-top: 4px; }
 
     .punch-card { background: var(--white); border-radius: var(--radius); padding: 16px; border: 1px solid var(--border); }
-    .punch-card-title { font-size: 12px; color: var(--text2); margin-bottom: 12px; }
+    .card-title { font-size: 12px; color: var(--text2); margin-bottom: 12px; }
     .punch-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .punch-btn { height: 64px; border-radius: var(--radius-sm); border: none; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; transition: transform 0.1s; }
     .punch-btn:active { transform: scale(0.96); }
@@ -59,11 +57,10 @@
     .punch-btn span { font-size: 13px; }
 
     .makeup-card { background: var(--white); border-radius: var(--radius); padding: 16px; border: 1px solid var(--border); }
-    .makeup-title { font-size: 12px; color: var(--text2); margin-bottom: 12px; }
-    .makeup-row { display: flex; gap: 8px; align-items: center; }
+    .makeup-row { display: flex; gap: 8px; }
     .makeup-date { flex: 1; height: 44px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 15px; padding: 0 12px; color: var(--text); background: var(--white); outline: none; }
     .makeup-date:focus { border-color: var(--blue-light); }
-    .makeup-time { width: 100px; height: 44px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 15px; padding: 0 12px; color: var(--text); background: var(--white); outline: none; }
+    .makeup-time { width: 105px; height: 44px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 15px; padding: 0 12px; color: var(--text); background: var(--white); outline: none; }
     .makeup-time:focus { border-color: var(--blue-light); }
     .makeup-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
     .makeup-btn { height: 40px; border-radius: var(--radius-sm); border: 1.5px solid; font-size: 13px; font-weight: 600; cursor: pointer; }
@@ -72,9 +69,11 @@
     .makeup-btn-out { background: var(--red-bg); color: var(--red); border-color: var(--red); }
 
     .log-card { background: var(--white); border-radius: var(--radius); padding: 16px; border: 1px solid var(--border); }
-    .log-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-    .log-title-text { font-size: 12px; color: var(--text2); }
-    .export-btn { height: 32px; padding: 0 12px; background: var(--blue-bg); color: var(--blue); border: none; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .log-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 8px; }
+    .log-title-text { font-size: 12px; color: var(--text2); flex-shrink: 0; }
+    .export-row { display: flex; align-items: center; gap: 6px; }
+    .export-month { height: 32px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; padding: 0 8px; color: var(--text); background: var(--white); outline: none; }
+    .export-btn { height: 32px; padding: 0 10px; background: var(--blue-bg); color: var(--blue); border: none; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
     .export-btn:active { opacity: 0.7; }
 
     .log-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); gap: 8px; }
@@ -97,7 +96,6 @@
     .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #1a1a1a; color: white; padding: 10px 20px; border-radius: 99px; font-size: 14px; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; z-index: 999; }
     .toast.show { opacity: 1; }
 
-    /* MODALS */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: flex-end; }
     .modal-overlay.open { display: flex; }
     .modal { background: var(--white); border-radius: 20px 20px 0 0; padding: 24px 20px; width: 100%; }
@@ -108,8 +106,8 @@
     .modal-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
     .modal-cancel { height: 48px; background: var(--gray-bg); color: var(--text); border: none; border-radius: var(--radius-sm); font-size: 15px; cursor: pointer; }
     .modal-save { height: 48px; background: var(--blue); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; }
-    .modal-danger { height: 44px; width: 100%; background: none; color: var(--red); border: 1.5px solid var(--red); border-radius: var(--radius-sm); font-size: 14px; cursor: pointer; margin-top: 10px; }
     .modal-save-green { height: 48px; background: var(--green); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; }
+    .modal-danger { height: 44px; width: 100%; background: none; color: var(--red); border: 1.5px solid var(--red); border-radius: var(--radius-sm); font-size: 14px; cursor: pointer; margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -145,7 +143,7 @@
     </div>
 
     <div class="punch-card">
-      <div class="punch-card-title">立即打卡</div>
+      <div class="card-title">立即打卡</div>
       <div class="punch-btns">
         <button class="punch-btn punch-btn-in" onclick="punchNow('上班')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
@@ -159,7 +157,7 @@
     </div>
 
     <div class="makeup-card">
-      <div class="makeup-title">補打卡（選擇日期時間）</div>
+      <div class="card-title">補打卡（選擇日期時間）</div>
       <div class="makeup-row">
         <input class="makeup-date" type="date" id="makeupDate">
         <input class="makeup-time" type="time" id="makeupTime">
@@ -173,10 +171,13 @@
     <div class="log-card">
       <div class="log-header">
         <div class="log-title-text">打卡紀錄</div>
-        <button class="export-btn" onclick="exportExcel()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          匯出 Excel
-        </button>
+        <div class="export-row">
+          <input class="export-month" type="month" id="exportMonth">
+          <button class="export-btn" onclick="exportExcel()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            匯出
+          </button>
+        </div>
       </div>
       <div id="logList"></div>
     </div>
@@ -238,6 +239,7 @@ function init(){
   const today = new Date();
   document.getElementById('makeupDate').value = today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
   document.getElementById('makeupTime').value = pad(today.getHours())+':'+pad(today.getMinutes());
+  document.getElementById('exportMonth').value = today.getFullYear()+'-'+pad(today.getMonth()+1);
 }
 
 function showSetup(){
@@ -253,9 +255,7 @@ function showMain(){
 function doSetup(){
   const name = document.getElementById('setupName').value.trim();
   if(!name){ showToast('請輸入姓名'); return; }
-  userName = name;
-  localStorage.setItem(KEY_NAME, userName);
-  showMain();
+  userName = name; localStorage.setItem(KEY_NAME, userName); showMain();
 }
 
 function updateClock(){
@@ -269,26 +269,21 @@ function saveRecords(){ localStorage.setItem(KEY_RECORDS, JSON.stringify(records
 
 function punchNow(type){
   const now = new Date();
-  records.push({
-    name: userName, type,
+  records.push({ name: userName, type,
     date: now.getFullYear()+'/'+pad(now.getMonth()+1)+'/'+pad(now.getDate()),
     time: pad(now.getHours())+':'+pad(now.getMinutes()),
-    ts: now.toISOString(), makeup: false
-  });
+    ts: now.toISOString(), makeup: false });
   saveRecords(); renderLog();
-  showToast(type + ' 打卡成功　' + pad(now.getHours())+':'+pad(now.getMinutes()));
+  showToast(type+' 打卡成功　'+pad(now.getHours())+':'+pad(now.getMinutes()));
 }
 
 function punchMakeup(type){
   const dateVal = document.getElementById('makeupDate').value;
   const timeVal = document.getElementById('makeupTime').value;
   if(!dateVal || !timeVal){ showToast('請選擇日期與時間'); return; }
-  const d = new Date(dateVal + 'T' + timeVal);
-  records.push({
-    name: userName, type,
-    date: dateVal.replace(/-/g,'/'),
-    time: timeVal, ts: d.toISOString(), makeup: true
-  });
+  records.push({ name: userName, type,
+    date: dateVal.replace(/-/g,'/'), time: timeVal,
+    ts: new Date(dateVal+'T'+timeVal).toISOString(), makeup: true });
   saveRecords(); renderLog();
   showToast('補打'+type+' '+dateVal.replace(/-/g,'/')+' '+timeVal);
 }
@@ -297,7 +292,7 @@ function renderLog(){
   const sorted = records.slice().sort((a,b) => b.ts.localeCompare(a.ts));
   const el = document.getElementById('logList');
   if(!sorted.length){ el.innerHTML = '<div class="log-empty">尚無打卡紀錄</div>'; return; }
-  el.innerHTML = sorted.slice(0,60).map((r,i) => {
+  el.innerHTML = sorted.slice(0,60).map(r => {
     const realIdx = records.indexOf(r);
     return `<div class="log-item">
       <div class="log-item-left" onclick="openEdit(${realIdx})">
@@ -330,43 +325,54 @@ function openEdit(idx){
   document.getElementById('editType').value = r.type;
   document.getElementById('editModal').classList.add('open');
 }
-
 function saveEdit(){
   const dateVal = document.getElementById('editDate').value;
   const timeVal = document.getElementById('editTime').value;
   const typeVal = document.getElementById('editType').value;
   if(!dateVal || !timeVal){ showToast('請填寫完整'); return; }
-  const d = new Date(dateVal + 'T' + timeVal);
-  records[editingIndex] = {
-    ...records[editingIndex],
-    date: dateVal.replace(/-/g,'/'),
-    time: timeVal, type: typeVal,
-    ts: d.toISOString(), makeup: true
-  };
-  saveRecords(); renderLog();
-  closeModal('editModal');
-  showToast('已更新');
+  records[editingIndex] = { ...records[editingIndex],
+    date: dateVal.replace(/-/g,'/'), time: timeVal, type: typeVal,
+    ts: new Date(dateVal+'T'+timeVal).toISOString(), makeup: true };
+  saveRecords(); renderLog(); closeModal('editModal'); showToast('已更新');
 }
-
 function deleteRecord(idx){
   if(!confirm('確定刪除這筆紀錄？')) return;
-  records.splice(idx, 1);
-  saveRecords(); renderLog();
-  showToast('已刪除');
+  records.splice(idx,1); saveRecords(); renderLog(); showToast('已刪除');
 }
 
 function exportExcel(){
-  if(!records.length){ showToast('尚無紀錄可匯出'); return; }
-  const data = [['日期','姓名','類型','時間','備註']];
-  records.slice().sort((a,b)=>a.ts.localeCompare(b.ts)).forEach(r=>{
-    data.push([r.date, r.name, r.type, r.time, r.makeup?'補打':'']);
+  const monthVal = document.getElementById('exportMonth').value;
+  if(!monthVal){ showToast('請選擇月份'); return; }
+  const [year, month] = monthVal.split('-').map(Number);
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const days = ['日','一','二','三','四','五','六'];
+
+  // Build lookup: date -> {上班: time, 下班: time}
+  const lookup = {};
+  records.forEach(r => {
+    if(!lookup[r.date]) lookup[r.date] = {};
+    // 有多筆同類型取最後一筆
+    lookup[r.date][r.type] = r.time;
   });
-  const ws = XLSX.utils.aoa_to_sheet(data);
-  ws['!cols'] = [{wch:12},{wch:10},{wch:8},{wch:8},{wch:6}];
+
+  const header = ['日期','星期','上班時間','下班時間'];
+  const rows = [header];
+  for(let d = 1; d <= daysInMonth; d++){
+    const dateStr = year+'/'+pad(month)+'/'+pad(d);
+    const dateObj = new Date(year, month-1, d);
+    const weekday = '星期'+days[dateObj.getDay()];
+    const inTime = (lookup[dateStr] && lookup[dateStr]['上班']) || '';
+    const outTime = (lookup[dateStr] && lookup[dateStr]['下班']) || '';
+    rows.push([dateStr, weekday, inTime, outTime]);
+  }
+
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = [{wch:12},{wch:8},{wch:10},{wch:10}];
+
+  // 週末標灰（僅設定欄寬，樣式需 xlsx-style，這裡用備註標記）
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, '打卡紀錄');
-  const n = new Date();
-  XLSX.writeFile(wb, '打卡紀錄_'+userName+'_'+n.getFullYear()+pad(n.getMonth()+1)+'.xlsx');
+  XLSX.utils.book_append_sheet(wb, ws, year+'年'+month+'月');
+  XLSX.writeFile(wb, '打卡紀錄_'+userName+'_'+year+pad(month)+'.xlsx');
   showToast('匯出成功');
 }
 
@@ -375,34 +381,28 @@ function openSettings(){
   document.getElementById('settingsModal').classList.add('open');
 }
 function closeModal(id){ document.getElementById(id).classList.remove('open'); }
-function closeModalOverlay(e, id){ if(e.target === document.getElementById(id)) closeModal(id); }
+function closeModalOverlay(e,id){ if(e.target===document.getElementById(id)) closeModal(id); }
 function saveSettings(){
   const name = document.getElementById('settingsName').value.trim();
   if(!name){ showToast('請輸入姓名'); return; }
-  userName = name;
-  localStorage.setItem(KEY_NAME, userName);
+  userName = name; localStorage.setItem(KEY_NAME,userName);
   document.getElementById('topName').textContent = userName;
-  closeModal('settingsModal');
-  showToast('已儲存');
+  closeModal('settingsModal'); showToast('已儲存');
 }
 function clearAllData(){
   if(!confirm('確定要清除所有打卡紀錄？')) return;
   records = []; saveRecords(); renderLog();
-  closeModal('settingsModal');
-  showToast('已清除所有紀錄');
+  closeModal('settingsModal'); showToast('已清除所有紀錄');
 }
 
 function showToast(msg){
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
-  clearTimeout(t._t);
-  t._t = setTimeout(()=>t.classList.remove('show'), 2500);
+  clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove('show'),2500);
 }
 
 init();
 </script>
-<script>
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
-</script>
+<script>if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }</script>
 </body>
 </html>
