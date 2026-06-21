@@ -179,6 +179,25 @@
       </div>
     </div>
 
+    <div class="makeup-card">
+      <div class="card-title">請假申請</div>
+      <div class="makeup-row">
+        <input class="makeup-date" type="date" id="leaveDate">
+        <select class="makeup-time" id="leaveType" onchange="onLeaveTypeChange()" style="width:105px;font-size:14px">
+          <option value="事假">事假</option>
+          <option value="病假">病假</option>
+          <option value="特休">特休</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+      <div id="leaveOtherWrap" style="display:none;margin-top:8px">
+        <input class="makeup-date" type="text" id="leaveOther" placeholder="請輸入假別（如：公假、喪假）" style="width:100%">
+      </div>
+      <div class="makeup-btns" style="grid-template-columns:1fr;margin-top:8px">
+        <button class="makeup-btn makeup-btn-out" onclick="saveLeave()">儲存請假</button>
+      </div>
+    </div>
+
     <div class="log-card">
       <div class="log-header">
         <div class="log-title-text">打卡紀錄</div>
@@ -236,9 +255,11 @@
 const KEY_NAME = 'punch_name';
 const KEY_RECORDS = 'punch_records';
 const KEY_TEMPS = 'punch_temps';
+const KEY_LEAVES = 'punch_leaves';
 let userName = '';
 let records = [];
-let temps = {}; // {date: temp}
+let temps = {};
+let leaves = {}; // {date: '假別'}
 let editingIndex = -1;
 
 function pad(n){ return String(n).padStart(2,'0'); }
@@ -247,6 +268,7 @@ function init(){
   userName = localStorage.getItem(KEY_NAME) || '';
   try { records = JSON.parse(localStorage.getItem(KEY_RECORDS) || '[]'); } catch(e){ records = []; }
   try { temps = JSON.parse(localStorage.getItem(KEY_TEMPS) || '{}'); } catch(e){ temps = {}; }
+  try { leaves = JSON.parse(localStorage.getItem(KEY_LEAVES) || '{}'); } catch(e){ leaves = {}; }
   if(userName){ showMain(); } else { showSetup(); }
   setInterval(updateClock, 1000);
   updateClock();
@@ -254,6 +276,7 @@ function init(){
   document.getElementById('makeupDate').value = today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
   document.getElementById('makeupTime').value = pad(today.getHours())+':'+pad(today.getMinutes());
   document.getElementById('tempDate').value = today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
+  document.getElementById('leaveDate').value = today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
   document.getElementById('exportMonth').value = today.getFullYear()+'-'+pad(today.getMonth()+1);
 }
 
@@ -282,6 +305,7 @@ function updateClock(){
 
 function saveRecords(){ localStorage.setItem(KEY_RECORDS, JSON.stringify(records)); }
 function saveTemps(){ localStorage.setItem(KEY_TEMPS, JSON.stringify(temps)); }
+function saveLeaves(){ localStorage.setItem(KEY_LEAVES, JSON.stringify(leaves)); }
 
 function saveTemp(){
   const dateVal = document.getElementById('tempDate').value;
@@ -292,6 +316,25 @@ function saveTemp(){
   temps[dateVal.replace(/-/g,'/')] = tempVal;
   saveTemps();
   showToast('體溫已儲存 '+tempVal+'°C');
+}
+
+function onLeaveTypeChange(){
+  const type = document.getElementById('leaveType').value;
+  document.getElementById('leaveOtherWrap').style.display = type === '其他' ? 'block' : 'none';
+}
+
+function saveLeave(){
+  const dateVal = document.getElementById('leaveDate').value;
+  let type = document.getElementById('leaveType').value;
+  if(type === '其他'){
+    const other = document.getElementById('leaveOther').value.trim();
+    if(!other){ showToast('請輸入假別名稱'); return; }
+    type = other;
+  }
+  if(!dateVal){ showToast('請選擇日期'); return; }
+  leaves[dateVal.replace(/-/g,'/')] = type;
+  saveLeaves();
+  showToast(dateVal.replace(/-/g,'/')+' 已登記'+type);
 }
 
 function punchNow(type){
@@ -391,9 +434,9 @@ function exportExcel(){
     const dateStr = year+'/'+pad(month)+'/'+pad(d);
     const dateObj = new Date(year, month-1, d);
     const weekday = '星期'+days[dateObj.getDay()];
-    const inTime = (lookup[dateStr] && lookup[dateStr]['上班']) || '';
-    const outTime = (lookup[dateStr] && lookup[dateStr]['下班']) || '';
-    const temp = temps[dateStr] || '';
+    const inTime = leaves[dateStr] ? leaves[dateStr] : ((lookup[dateStr] && lookup[dateStr]['上班']) || '');
+    const outTime = leaves[dateStr] ? leaves[dateStr] : ((lookup[dateStr] && lookup[dateStr]['下班']) || '');
+    const temp = temps[dateStr] ? temps[dateStr]+'°C' : '';
     rows.push([userName, dateStr, weekday, inTime, outTime, temp]);
   }
 
