@@ -168,6 +168,17 @@
       </div>
     </div>
 
+    <div class="makeup-card">
+      <div class="card-title">每日體溫</div>
+      <div class="makeup-row">
+        <input class="makeup-date" type="date" id="tempDate">
+        <input class="makeup-time" type="number" id="tempValue" placeholder="36.5" min="34" max="42" step="0.1" style="width:105px">
+      </div>
+      <div class="makeup-btns" style="grid-template-columns:1fr">
+        <button class="makeup-btn makeup-btn-in" onclick="saveTemp()">儲存體溫</button>
+      </div>
+    </div>
+
     <div class="log-card">
       <div class="log-header">
         <div class="log-title-text">打卡紀錄</div>
@@ -220,12 +231,14 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <script>
 const KEY_NAME = 'punch_name';
 const KEY_RECORDS = 'punch_records';
+const KEY_TEMPS = 'punch_temps';
 let userName = '';
 let records = [];
+let temps = {}; // {date: temp}
 let editingIndex = -1;
 
 function pad(n){ return String(n).padStart(2,'0'); }
@@ -233,12 +246,14 @@ function pad(n){ return String(n).padStart(2,'0'); }
 function init(){
   userName = localStorage.getItem(KEY_NAME) || '';
   try { records = JSON.parse(localStorage.getItem(KEY_RECORDS) || '[]'); } catch(e){ records = []; }
+  try { temps = JSON.parse(localStorage.getItem(KEY_TEMPS) || '{}'); } catch(e){ temps = {}; }
   if(userName){ showMain(); } else { showSetup(); }
   setInterval(updateClock, 1000);
   updateClock();
   const today = new Date();
   document.getElementById('makeupDate').value = today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
   document.getElementById('makeupTime').value = pad(today.getHours())+':'+pad(today.getMinutes());
+  document.getElementById('tempDate').value = today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
   document.getElementById('exportMonth').value = today.getFullYear()+'-'+pad(today.getMonth()+1);
 }
 
@@ -266,6 +281,18 @@ function updateClock(){
 }
 
 function saveRecords(){ localStorage.setItem(KEY_RECORDS, JSON.stringify(records)); }
+function saveTemps(){ localStorage.setItem(KEY_TEMPS, JSON.stringify(temps)); }
+
+function saveTemp(){
+  const dateVal = document.getElementById('tempDate').value;
+  const tempVal = document.getElementById('tempValue').value;
+  if(!dateVal || !tempVal){ showToast('請填寫日期與體溫'); return; }
+  const t = parseFloat(tempVal);
+  if(t < 34 || t > 42){ showToast('體溫數值不合理'); return; }
+  temps[dateVal.replace(/-/g,'/')] = tempVal;
+  saveTemps();
+  showToast('體溫已儲存 '+tempVal+'°C');
+}
 
 function punchNow(type){
   const now = new Date();
@@ -355,8 +382,10 @@ function exportExcel(){
     lookup[r.date][r.type] = r.time;
   });
 
-  const header = ['姓名','年月','日期','星期','上班時間','下班時間'];
-  const rows = [header];
+  // Row 1: 澤天 title, Row 2: header, Row 3+: data
+  const titleRow = ['澤天','','','','','',''];
+  const header = ['姓名','年月','日期','星期','上班時間','下班時間','體溫'];
+  const rows = [titleRow, header];
   const yearMonth = year+'年'+month+'月';
   for(let d = 1; d <= daysInMonth; d++){
     const dateStr = year+'/'+pad(month)+'/'+pad(d);
@@ -364,13 +393,36 @@ function exportExcel(){
     const weekday = '星期'+days[dateObj.getDay()];
     const inTime = (lookup[dateStr] && lookup[dateStr]['上班']) || '';
     const outTime = (lookup[dateStr] && lookup[dateStr]['下班']) || '';
-    rows.push([userName, yearMonth, dateStr, weekday, inTime, outTime]);
+    const temp = temps[dateStr] || '';
+    rows.push([userName, yearMonth, dateStr, weekday, inTime, outTime, temp]);
   }
 
   const ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [{wch:10},{wch:10},{wch:12},{wch:8},{wch:10},{wch:10}];
+  ws['!cols'] = [{wch:10},{wch:10},{wch:12},{wch:8},{wch:10},{wch:10},{wch:8}];
 
-  // 週末標灰（僅設定欄寬，樣式需 xlsx-style，這裡用備註標記）
+  // 合併第1行 A1:G1 作為澤天標題
+  ws['!merges'] = [{ s:{r:0,c:0}, e:{r:0,c:6} }];
+
+  // 加框線給所有有資料的儲存格
+  const totalRows = rows.length;
+  const totalCols = 7;
+  for(let r = 0; r < totalRows; r++){
+    for(let c = 0; c < totalCols; c++){
+      const cellRef = XLSX.utils.encode_cell({r, c});
+      if(!ws[cellRef]) ws[cellRef] = {v:'', t:'s'};
+      ws[cellRef].s = {
+        border: {
+          top:    {style:'thin', color:{rgb:'000000'}},
+          bottom: {style:'thin', color:{rgb:'000000'}},
+          left:   {style:'thin', color:{rgb:'000000'}},
+          right:  {style:'thin', color:{rgb:'000000'}}
+        },
+        alignment: { horizontal: r===0 ? 'center' : 'center', vertical:'center' },
+        font: r===0 ? {bold:true, sz:14} : r===1 ? {bold:true} : {}
+      };
+    }
+  }
+
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, year+'年'+month+'月');
   XLSX.writeFile(wb, '打卡紀錄_'+userName+'_'+year+pad(month)+'.xlsx');
