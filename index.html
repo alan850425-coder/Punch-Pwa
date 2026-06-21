@@ -13,29 +13,18 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     :root {
-      --blue: #1F3864;
-      --blue-light: #2E75B6;
-      --blue-bg: #EBF3FB;
-      --green: #1a7a3c;
-      --green-bg: #e8f5ee;
-      --red: #c0392b;
-      --red-bg: #fdf0ef;
-      --gray: #6b7280;
-      --gray-bg: #f3f4f6;
-      --border: #e5e7eb;
-      --text: #111827;
-      --text2: #6b7280;
-      --white: #ffffff;
-      --radius: 12px;
-      --radius-sm: 8px;
+      --blue: #1F3864; --blue-light: #2E75B6; --blue-bg: #EBF3FB;
+      --green: #1a7a3c; --green-bg: #e8f5ee;
+      --red: #c0392b; --red-bg: #fdf0ef;
+      --gray: #6b7280; --gray-bg: #f3f4f6;
+      --border: #e5e7eb; --text: #111827; --text2: #6b7280; --white: #ffffff;
+      --radius: 12px; --radius-sm: 8px;
     }
     html, body { height: 100%; background: #f0f4f8; font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans TC', sans-serif; color: var(--text); }
-
-    /* SCREENS */
     .screen { display: none; min-height: 100vh; flex-direction: column; }
     .screen.active { display: flex; }
 
-    /* SETUP SCREEN */
+    /* SETUP */
     #setupScreen { align-items: center; justify-content: center; padding: 2rem; background: var(--white); }
     .setup-logo { width: 72px; height: 72px; background: var(--blue); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; }
     .setup-logo svg { width: 36px; height: 36px; fill: white; }
@@ -44,35 +33,31 @@
     .setup-label { font-size: 13px; color: var(--text2); margin-bottom: 6px; }
     .setup-input { width: 100%; height: 52px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 18px; padding: 0 16px; color: var(--text); background: var(--white); outline: none; transition: border-color 0.2s; }
     .setup-input:focus { border-color: var(--blue-light); }
-    .setup-btn { width: 100%; height: 52px; background: var(--blue); color: white; border: none; border-radius: var(--radius-sm); font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 1rem; transition: opacity 0.15s; }
+    .setup-btn { width: 100%; height: 52px; background: var(--blue); color: white; border: none; border-radius: var(--radius-sm); font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 1rem; }
     .setup-btn:active { opacity: 0.8; }
 
-    /* MAIN SCREEN */
+    /* MAIN */
     #mainScreen { background: #f0f4f8; }
     .topbar { background: var(--blue); color: white; padding: 16px 20px 14px; display: flex; align-items: center; justify-content: space-between; }
     .topbar-name { font-size: 16px; font-weight: 600; }
     .topbar-sub { font-size: 12px; opacity: 0.7; margin-top: 1px; }
     .topbar-settings { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.15); border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-
     .main-content { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
 
-    /* CLOCK CARD */
     .clock-card { background: var(--white); border-radius: var(--radius); padding: 20px; text-align: center; border: 1px solid var(--border); }
     .clock-time { font-size: 44px; font-weight: 300; color: var(--blue); letter-spacing: 3px; font-variant-numeric: tabular-nums; }
     .clock-date { font-size: 14px; color: var(--text2); margin-top: 4px; }
 
-    /* PUNCH BUTTONS */
     .punch-card { background: var(--white); border-radius: var(--radius); padding: 16px; border: 1px solid var(--border); }
-    .punch-card-title { font-size: 12px; color: var(--text2); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+    .punch-card-title { font-size: 12px; color: var(--text2); margin-bottom: 12px; }
     .punch-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .punch-btn { height: 64px; border-radius: var(--radius-sm); border: none; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; transition: transform 0.1s, opacity 0.1s; }
-    .punch-btn:active { transform: scale(0.96); opacity: 0.85; }
+    .punch-btn { height: 64px; border-radius: var(--radius-sm); border: none; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; transition: transform 0.1s; }
+    .punch-btn:active { transform: scale(0.96); }
     .punch-btn-in { background: var(--green-bg); color: var(--green); }
     .punch-btn-out { background: var(--red-bg); color: var(--red); }
     .punch-btn svg { width: 22px; height: 22px; }
     .punch-btn span { font-size: 13px; }
 
-    /* DATE SELECTOR for makeup punch */
     .makeup-card { background: var(--white); border-radius: var(--radius); padding: 16px; border: 1px solid var(--border); }
     .makeup-title { font-size: 12px; color: var(--text2); margin-bottom: 12px; }
     .makeup-row { display: flex; gap: 8px; align-items: center; }
@@ -81,51 +66,54 @@
     .makeup-time { width: 100px; height: 44px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 15px; padding: 0 12px; color: var(--text); background: var(--white); outline: none; }
     .makeup-time:focus { border-color: var(--blue-light); }
     .makeup-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
-    .makeup-btn { height: 40px; border-radius: var(--radius-sm); border: 1.5px solid; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity 0.15s; }
+    .makeup-btn { height: 40px; border-radius: var(--radius-sm); border: 1.5px solid; font-size: 13px; font-weight: 600; cursor: pointer; }
     .makeup-btn:active { opacity: 0.7; }
     .makeup-btn-in { background: var(--green-bg); color: var(--green); border-color: var(--green); }
     .makeup-btn-out { background: var(--red-bg); color: var(--red); border-color: var(--red); }
 
-    /* TODAY LOG */
     .log-card { background: var(--white); border-radius: var(--radius); padding: 16px; border: 1px solid var(--border); }
     .log-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .log-title-text { font-size: 12px; color: var(--text2); }
     .export-btn { height: 32px; padding: 0 12px; background: var(--blue-bg); color: var(--blue); border: none; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; }
     .export-btn:active { opacity: 0.7; }
-    .log-item { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); }
+
+    .log-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); gap: 8px; }
     .log-item:last-child { border-bottom: none; }
-    .log-item-left { display: flex; align-items: center; gap: 10px; }
+    .log-item-left { display: flex; align-items: center; gap: 10px; flex: 1; cursor: pointer; }
     .log-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .log-dot-in { background: var(--green); }
     .log-dot-out { background: var(--red); }
-    .log-info { }
     .log-date { font-size: 13px; color: var(--text); font-weight: 500; }
     .log-badge { font-size: 11px; color: var(--text2); }
-    .log-time { font-size: 15px; font-weight: 600; color: var(--text); }
-    .log-empty { text-align: center; padding: 1.5rem 0; color: var(--text2); font-size: 14px; }
     .log-makeup-tag { font-size: 10px; color: var(--text2); background: var(--gray-bg); border-radius: 4px; padding: 1px 5px; margin-left: 4px; }
+    .log-time { font-size: 15px; font-weight: 600; color: var(--text); }
+    .log-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .log-btn { width: 32px; height: 32px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--gray-bg); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .log-btn:active { opacity: 0.6; }
+    .log-btn-edit { color: var(--blue); }
+    .log-btn-del { color: var(--red); }
+    .log-empty { text-align: center; padding: 1.5rem 0; color: var(--text2); font-size: 14px; }
 
-    /* TOAST */
     .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #1a1a1a; color: white; padding: 10px 20px; border-radius: 99px; font-size: 14px; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; z-index: 999; }
     .toast.show { opacity: 1; }
 
-    /* SETTINGS MODAL */
+    /* MODALS */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: flex-end; }
     .modal-overlay.open { display: flex; }
     .modal { background: var(--white); border-radius: 20px 20px 0 0; padding: 24px 20px; width: 100%; }
     .modal-title { font-size: 16px; font-weight: 700; color: var(--blue); margin-bottom: 16px; }
-    .modal-label { font-size: 13px; color: var(--text2); margin-bottom: 6px; }
-    .modal-input { width: 100%; height: 48px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 16px; padding: 0 14px; color: var(--text); outline: none; }
+    .modal-label { font-size: 13px; color: var(--text2); margin-bottom: 6px; margin-top: 12px; }
+    .modal-input { width: 100%; height: 48px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 16px; padding: 0 14px; color: var(--text); outline: none; background: var(--white); }
     .modal-input:focus { border-color: var(--blue-light); }
     .modal-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
     .modal-cancel { height: 48px; background: var(--gray-bg); color: var(--text); border: none; border-radius: var(--radius-sm); font-size: 15px; cursor: pointer; }
     .modal-save { height: 48px; background: var(--blue); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; }
     .modal-danger { height: 44px; width: 100%; background: none; color: var(--red); border: 1.5px solid var(--red); border-radius: var(--radius-sm); font-size: 14px; cursor: pointer; margin-top: 10px; }
+    .modal-save-green { height: 48px; background: var(--green); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; }
   </style>
 </head>
 <body>
 
-<!-- SETUP SCREEN -->
 <div class="screen active" id="setupScreen">
   <div class="setup-logo">
     <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
@@ -137,7 +125,6 @@
   <button class="setup-btn" onclick="doSetup()">開始使用</button>
 </div>
 
-<!-- MAIN SCREEN -->
 <div class="screen" id="mainScreen">
   <div class="topbar">
     <div>
@@ -152,17 +139,13 @@
   </div>
 
   <div class="main-content">
-    <!-- Clock -->
     <div class="clock-card">
       <div class="clock-time" id="clockTime">--:--:--</div>
       <div class="clock-date" id="clockDate"></div>
     </div>
 
-    <!-- Punch now -->
     <div class="punch-card">
-      <div class="punch-card-title">
-        <span>立即打卡</span>
-      </div>
+      <div class="punch-card-title">立即打卡</div>
       <div class="punch-btns">
         <button class="punch-btn punch-btn-in" onclick="punchNow('上班')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
@@ -175,7 +158,6 @@
       </div>
     </div>
 
-    <!-- Makeup punch -->
     <div class="makeup-card">
       <div class="makeup-title">補打卡（選擇日期時間）</div>
       <div class="makeup-row">
@@ -188,7 +170,6 @@
       </div>
     </div>
 
-    <!-- Log -->
     <div class="log-card">
       <div class="log-header">
         <div class="log-title-text">打卡紀錄</div>
@@ -202,47 +183,58 @@
   </div>
 </div>
 
-<!-- SETTINGS MODAL -->
-<div class="modal-overlay" id="settingsModal" onclick="closeSettings(event)">
+<!-- 設定 Modal -->
+<div class="modal-overlay" id="settingsModal" onclick="closeModalOverlay(event,'settingsModal')">
   <div class="modal">
     <div class="modal-title">設定</div>
     <div class="modal-label">修改姓名</div>
     <input class="modal-input" id="settingsName" type="text" maxlength="20">
     <div class="modal-btns">
-      <button class="modal-cancel" onclick="closeSettingsModal()">取消</button>
+      <button class="modal-cancel" onclick="closeModal('settingsModal')">取消</button>
       <button class="modal-save" onclick="saveSettings()">儲存</button>
     </div>
     <button class="modal-danger" onclick="clearAllData()">清除所有打卡紀錄</button>
   </div>
 </div>
 
-<!-- TOAST -->
+<!-- 編輯紀錄 Modal -->
+<div class="modal-overlay" id="editModal" onclick="closeModalOverlay(event,'editModal')">
+  <div class="modal">
+    <div class="modal-title">編輯紀錄</div>
+    <div class="modal-label">日期</div>
+    <input class="modal-input" type="date" id="editDate">
+    <div class="modal-label">時間</div>
+    <input class="modal-input" type="time" id="editTime">
+    <div class="modal-label">類型</div>
+    <select class="modal-input" id="editType">
+      <option value="上班">上班</option>
+      <option value="下班">下班</option>
+    </select>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeModal('editModal')">取消</button>
+      <button class="modal-save-green" onclick="saveEdit()">儲存</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 const KEY_NAME = 'punch_name';
 const KEY_RECORDS = 'punch_records';
-
 let userName = '';
 let records = [];
+let editingIndex = -1;
 
 function pad(n){ return String(n).padStart(2,'0'); }
 
 function init(){
   userName = localStorage.getItem(KEY_NAME) || '';
   try { records = JSON.parse(localStorage.getItem(KEY_RECORDS) || '[]'); } catch(e){ records = []; }
-
-  if(userName){
-    showMain();
-  } else {
-    showSetup();
-  }
-
+  if(userName){ showMain(); } else { showSetup(); }
   setInterval(updateClock, 1000);
   updateClock();
-
-  // Default makeup date to today
   const today = new Date();
   document.getElementById('makeupDate').value = today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
   document.getElementById('makeupTime').value = pad(today.getHours())+':'+pad(today.getMinutes());
@@ -258,7 +250,6 @@ function showMain(){
   document.getElementById('topName').textContent = userName;
   renderLog();
 }
-
 function doSetup(){
   const name = document.getElementById('setupName').value.trim();
   if(!name){ showToast('請輸入姓名'); return; }
@@ -271,28 +262,21 @@ function updateClock(){
   const n = new Date();
   document.getElementById('clockTime').textContent = pad(n.getHours())+':'+pad(n.getMinutes())+':'+pad(n.getSeconds());
   const days = ['日','一','二','三','四','五','六'];
-  document.getElementById('clockDate').textContent =
-    n.getFullYear()+'年'+pad(n.getMonth()+1)+'月'+pad(n.getDate())+'日　星期'+days[n.getDay()];
+  document.getElementById('clockDate').textContent = n.getFullYear()+'年'+pad(n.getMonth()+1)+'月'+pad(n.getDate())+'日　星期'+days[n.getDay()];
 }
 
-function saveRecords(){
-  localStorage.setItem(KEY_RECORDS, JSON.stringify(records));
-}
+function saveRecords(){ localStorage.setItem(KEY_RECORDS, JSON.stringify(records)); }
 
 function punchNow(type){
   const now = new Date();
-  const rec = {
-    name: userName,
-    type: type,
+  records.push({
+    name: userName, type,
     date: now.getFullYear()+'/'+pad(now.getMonth()+1)+'/'+pad(now.getDate()),
     time: pad(now.getHours())+':'+pad(now.getMinutes()),
-    ts: now.toISOString(),
-    makeup: false
-  };
-  records.push(rec);
-  saveRecords();
-  renderLog();
-  showToast(type + ' 打卡成功　' + rec.time);
+    ts: now.toISOString(), makeup: false
+  });
+  saveRecords(); renderLog();
+  showToast(type + ' 打卡成功　' + pad(now.getHours())+':'+pad(now.getMinutes()));
 }
 
 function punchMakeup(type){
@@ -300,42 +284,75 @@ function punchMakeup(type){
   const timeVal = document.getElementById('makeupTime').value;
   if(!dateVal || !timeVal){ showToast('請選擇日期與時間'); return; }
   const d = new Date(dateVal + 'T' + timeVal);
-  const rec = {
-    name: userName,
-    type: type,
+  records.push({
+    name: userName, type,
     date: dateVal.replace(/-/g,'/'),
-    time: timeVal,
-    ts: d.toISOString(),
-    makeup: true
-  };
-  // Check duplicate
-  const exists = records.find(r => r.date === rec.date && r.type === rec.type && !r.makeup);
-  records.push(rec);
-  saveRecords();
-  renderLog();
-  showToast('補打' + type + ' ' + rec.date + ' ' + rec.time);
+    time: timeVal, ts: d.toISOString(), makeup: true
+  });
+  saveRecords(); renderLog();
+  showToast('補打'+type+' '+dateVal.replace(/-/g,'/')+' '+timeVal);
 }
 
 function renderLog(){
   const sorted = records.slice().sort((a,b) => b.ts.localeCompare(a.ts));
   const el = document.getElementById('logList');
-  if(!sorted.length){
-    el.innerHTML = '<div class="log-empty">尚無打卡紀錄</div>';
-    return;
-  }
-  // Group by date, show last 30 records
-  el.innerHTML = sorted.slice(0,50).map(r => `
-    <div class="log-item">
-      <div class="log-item-left">
+  if(!sorted.length){ el.innerHTML = '<div class="log-empty">尚無打卡紀錄</div>'; return; }
+  el.innerHTML = sorted.slice(0,60).map((r,i) => {
+    const realIdx = records.indexOf(r);
+    return `<div class="log-item">
+      <div class="log-item-left" onclick="openEdit(${realIdx})">
         <div class="log-dot ${r.type==='上班'?'log-dot-in':'log-dot-out'}"></div>
-        <div class="log-info">
+        <div>
           <div class="log-date">${r.date}${r.makeup?'<span class="log-makeup-tag">補打</span>':''}</div>
           <div class="log-badge">${r.type}</div>
         </div>
       </div>
-      <div class="log-time">${r.time}</div>
-    </div>
-  `).join('');
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="log-time">${r.time}</div>
+        <div class="log-actions">
+          <button class="log-btn log-btn-edit" onclick="openEdit(${realIdx})" aria-label="編輯">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="log-btn log-btn-del" onclick="deleteRecord(${realIdx})" aria-label="刪除">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openEdit(idx){
+  editingIndex = idx;
+  const r = records[idx];
+  document.getElementById('editDate').value = r.date.replace(/\//g,'-');
+  document.getElementById('editTime').value = r.time;
+  document.getElementById('editType').value = r.type;
+  document.getElementById('editModal').classList.add('open');
+}
+
+function saveEdit(){
+  const dateVal = document.getElementById('editDate').value;
+  const timeVal = document.getElementById('editTime').value;
+  const typeVal = document.getElementById('editType').value;
+  if(!dateVal || !timeVal){ showToast('請填寫完整'); return; }
+  const d = new Date(dateVal + 'T' + timeVal);
+  records[editingIndex] = {
+    ...records[editingIndex],
+    date: dateVal.replace(/-/g,'/'),
+    time: timeVal, type: typeVal,
+    ts: d.toISOString(), makeup: true
+  };
+  saveRecords(); renderLog();
+  closeModal('editModal');
+  showToast('已更新');
+}
+
+function deleteRecord(idx){
+  if(!confirm('確定刪除這筆紀錄？')) return;
+  records.splice(idx, 1);
+  saveRecords(); renderLog();
+  showToast('已刪除');
 }
 
 function exportExcel(){
@@ -357,46 +374,35 @@ function openSettings(){
   document.getElementById('settingsName').value = userName;
   document.getElementById('settingsModal').classList.add('open');
 }
-function closeSettingsModal(){
-  document.getElementById('settingsModal').classList.remove('open');
-}
-function closeSettings(e){
-  if(e.target === document.getElementById('settingsModal')) closeSettingsModal();
-}
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+function closeModalOverlay(e, id){ if(e.target === document.getElementById(id)) closeModal(id); }
 function saveSettings(){
   const name = document.getElementById('settingsName').value.trim();
   if(!name){ showToast('請輸入姓名'); return; }
   userName = name;
   localStorage.setItem(KEY_NAME, userName);
   document.getElementById('topName').textContent = userName;
-  closeSettingsModal();
+  closeModal('settingsModal');
   showToast('已儲存');
 }
 function clearAllData(){
-  if(!confirm('確定要清除所有打卡紀錄？此操作無法復原。')) return;
-  records = [];
-  saveRecords();
-  renderLog();
-  closeSettingsModal();
+  if(!confirm('確定要清除所有打卡紀錄？')) return;
+  records = []; saveRecords(); renderLog();
+  closeModal('settingsModal');
   showToast('已清除所有紀錄');
 }
 
 function showToast(msg){
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   clearTimeout(t._t);
   t._t = setTimeout(()=>t.classList.remove('show'), 2500);
 }
 
 init();
 </script>
-
-<!-- PWA Service Worker Registration -->
 <script>
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
 </script>
 </body>
 </html>
