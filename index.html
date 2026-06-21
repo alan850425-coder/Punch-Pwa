@@ -355,19 +355,20 @@ function exportExcel(){
     lookup[r.date][r.type] = r.time;
   });
 
-  const header = ['日期','星期','上班時間','下班時間'];
+  const header = ['姓名','年月','日期','星期','上班時間','下班時間'];
   const rows = [header];
+  const yearMonth = year+'年'+month+'月';
   for(let d = 1; d <= daysInMonth; d++){
     const dateStr = year+'/'+pad(month)+'/'+pad(d);
     const dateObj = new Date(year, month-1, d);
     const weekday = '星期'+days[dateObj.getDay()];
     const inTime = (lookup[dateStr] && lookup[dateStr]['上班']) || '';
     const outTime = (lookup[dateStr] && lookup[dateStr]['下班']) || '';
-    rows.push([dateStr, weekday, inTime, outTime]);
+    rows.push([userName, yearMonth, dateStr, weekday, inTime, outTime]);
   }
 
   const ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [{wch:12},{wch:8},{wch:10},{wch:10}];
+  ws['!cols'] = [{wch:10},{wch:10},{wch:12},{wch:8},{wch:10},{wch:10}];
 
   // 週末標灰（僅設定欄寬，樣式需 xlsx-style，這裡用備註標記）
   const wb = XLSX.utils.book_new();
